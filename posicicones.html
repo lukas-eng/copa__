@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Posiciones</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ecf0f1;
+      margin: 0;
+    }
+
+    nav {
+      background: #2d3436;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      float: left;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 90%;
+      margin: auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #0984e3;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="inicio.html">← Inicio</a>
+    Posiciones
+  </nav>
+
+  <h1>Tabla de Posiciones</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Selección</th>
+        <th>PJ</th>
+        <th>PG</th>
+        <th>PE</th>
+        <th>PP</th>
+        <th>Puntos</th>
+      </tr>
+    </thead>
+    <tbody id="tabla">
+    </tbody>
+  </table>
+
+  <script>
+    fetch("http://127.0.0.1:8000/api/posiciones")
+      .then(res => res.json())
+      .then(data => {
+        const tabla = document.getElementById("tabla");
+        data.forEach(p => {
+          tabla.innerHTML += `
+            <tr>
+              <td>${p.nombre}</td>
+              <td>${p.pj}</td>
+              <td>${p.pg}</td>
+              <td>${p.pe}</td>
+              <td>${p.pp}</td>
+              <td>${p.puntos}</td>
+            </tr>
+          `;
+        });
+      });
+  </script>
+</body>
+</html>

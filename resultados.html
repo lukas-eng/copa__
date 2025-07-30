@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resultados</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+    }
+
+    nav {
+      background: #2d3436;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      float: left;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .partido {
+      background: white;
+      margin: 10px auto;
+      padding: 10px;
+      border-radius: 8px;
+      width: 90%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="inicio.html">← Inicio</a>
+    Resultados
+  </nav>
+
+  <h1>Resultados de los Partidos</h1>
+
+  <div id="resultados"></div>
+
+  <script>
+    fetch("http://127.0.0.1:8000/api/resultados")
+      .then(res => res.json())
+      .then(data => {
+        const contenedor = document.getElementById("resultados");
+        data.forEach(p => {
+          contenedor.innerHTML += `
+            <div class="partido">
+              ${p.seleccion_a} ${p.goles_a} - ${p.goles_b} ${p.seleccion_b}<br>
+              Fecha: ${p.fecha}
+            </div>
+          `;
+        });
+      });
+  </script>
+</body>
+</html>

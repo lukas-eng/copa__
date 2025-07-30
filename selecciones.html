@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selecciones</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      margin: 0;
+    }
+
+    nav {
+      background: #2d3436;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      color: #0a3d62;
+    }
+
+    #busqueda {
+      display: block;
+      width: 90%;
+      margin: 0 auto 20px auto;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #74b9ff;
+      border-radius: 8px;
+    }
+
+    .seleccion {
+      background: #ffffff;
+      padding: 15px;
+      margin: 10px auto;
+      width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="inicio.html">← Inicio</a>
+    Selecciones
+  </nav>
+
+  <h1>Selecciones Copa América</h1>
+
+  <input type="text" id="busqueda" placeholder="Buscar selección...">
+
+  <div id="selecciones"></div>
+
+  <script>
+    let todas = [];
+
+    function mostrar(selecciones) {
+      const contenedor = document.getElementById('selecciones');
+      contenedor.innerHTML = "";
+      selecciones.forEach(s => {
+        contenedor.innerHTML += `
+          <div class="seleccion">
+            <strong>${s.nombre}</strong>
+          </div>
+        `;
+      });
+    }
+
+    fetch('http://127.0.0.1:8000/api/selecciones')
+      .then(res => res.json())
+      .then(data => {
+        todas = data;
+        mostrar(todas);
+      });
+
+    document.getElementById('busqueda').addEventListener('input', e => {
+      const texto = e.target.value.toLowerCase();
+      const filtradas = todas.filter(s => s.nombre.toLowerCase().includes(texto));
+      mostrar(filtradas);
+    });
+  </script>
+</body>
+</html>
